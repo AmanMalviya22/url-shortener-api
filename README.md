@@ -53,7 +53,8 @@ This API provides functionalities to shorten URLs, track visits with detailed an
    cd url-shortener-api
 
 2. **Install dependencies:**
-   ```npm install
+   ```bash
+   npm install
 
 
 3. **Configuration:**
