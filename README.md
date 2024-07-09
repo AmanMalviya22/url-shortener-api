@@ -79,7 +79,7 @@ This API provides functionalities to shorten URLs, track visits with detailed an
 
 
 ## Request and Response Formats : Refer these postman screenshot
-   ```bash
+  
 
    1. For Generating Short URL
    ![alt text](image.png) 
