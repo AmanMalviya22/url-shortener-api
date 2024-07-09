@@ -1,16 +1,6 @@
 const Url = require('../models/Url');
 const Visit = require('../models/Visit');
-const redisClient = require('../config/redis');
-const { nanoid } = require('nanoid');
 const { queueBackgroundJob } = require('../utils/backgroundJobs');
-const { getDeviceType } = require('../utils/deviceType');
-
-
-
-
-
-
-
 const { createShortUrl } = require('../services/urlService');
 
 exports.shortenUrl = async (req, res) => {
@@ -28,7 +18,20 @@ exports.redirectUrl = async (req, res) => {
   try {
     const url = await Url.findOne({ shortCode });
     if (url) {
+      // Create a new Visit record
+      console.log("IP address: "+ req.ip);
+      await Visit.create({
+        shortCode,
+        userAgent: req.headers['user-agent'],
+        ipAddress: req.ip,
+        referrer: req.get('referrer') || 'direct',
+        deviceType: 'desktop', // You should determine the device type based on user-agent
+      });
+
+      // Queue background job for further processing (if needed)
       queueBackgroundJob(shortCode, req);
+
+      // Redirect user to the original URL
       res.redirect(302, url.originalUrl);
     } else {
       res.status(404).json({ message: 'URL not found' });
@@ -37,6 +40,3 @@ exports.redirectUrl = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
-
-
-
