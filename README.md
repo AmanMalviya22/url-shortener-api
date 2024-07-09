@@ -58,8 +58,9 @@ This API provides functionalities to shorten URLs, track visits with detailed an
 
 
 3. **Configuration:**
+    ```bash
     Set up environment variables:
-    Create a .env file based on .env.example and configure MongoDB and Redis connection details.
+    Create a .env file and configure MongoDB and Redis connection details.
     PORT=3000
     MONGO_URI=mongodb://localhost:27017/urlshortener
     REDIS_URL=redis://localhost:6379
@@ -70,6 +71,7 @@ This API provides functionalities to shorten URLs, track visits with detailed an
 
  
 ## Endpoints
+    ```bash
     POST localhost:3000/api/shorten: Shorten a URL.
     GET localhost:3000/api/:shortCode: Redirect to the original URL and track visit.
     GET localhost:3000/api/analytics/:shortCode: Retrieve analytics for a shortened URL
@@ -77,6 +79,8 @@ This API provides functionalities to shorten URLs, track visits with detailed an
 
 
 ## Request and Response Formats : Refer these postman screenshot
+   ```bash
+
    1. For Generating Short URL
    ![alt text](image.png) 
 
