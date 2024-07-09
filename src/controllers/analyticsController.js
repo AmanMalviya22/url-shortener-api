@@ -10,18 +10,18 @@ exports.getAnalytics = async (req, res) => {
       return res.status(404).json({ message: 'URL not found' });
     }
 
-    const totalVisits = await Visit.countDocuments({ shortCode });
-    const uniqueVisitors = await Visit.distinct('ipAddress', { shortCode }).countDocuments();
-    const visitsByDevice = await Visit.aggregate([
+    const totalVisits = await Url.countDocuments({ shortCode });
+    const uniqueVisitors = await Url.distinct('ipAddress', { shortCode }).countDocuments();
+    const visitsByDevice = await Url.aggregate([
       { $match: { shortCode } },
       { $group: { _id: '$deviceType', count: { $sum: 1 } } },
     ]);
 
     res.status(200).json({
       originalUrl: url.originalUrl,
-      totalVisits,
-      uniqueVisitors,
-      visitsByDevice,
+      totalVisits:url.visitCount,
+      uniqueVisitors:url.uniqueVisitors,
+      visitsByDevice:url.visitsByDevice,
     });
   } catch (error) {
     console.error(error);

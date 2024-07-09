@@ -6,6 +6,7 @@ const visitQueue = new Queue('visitQueue');
 visitQueue.process(async (job, done) => {
   try {
     const { shortCode, visitData } = job.data;
+    console.log(`Processing job for shortCode: ${shortCode}`);
     await trackVisit(shortCode, visitData);
     done();
   } catch (error) {
@@ -22,6 +23,7 @@ const queueBackgroundJob = (shortCode, req) => {
     referrer: req.get('referrer') || 'direct',
   };
 
+  console.log(`Queuing job for shortCode: ${shortCode}`);
   visitQueue.add({ shortCode, visitData }, { attempts: 3 });
 };
 
